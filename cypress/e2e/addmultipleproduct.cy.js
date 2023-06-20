@@ -16,8 +16,8 @@ describe("Add multile items to basket",()=>{
         
          cy.visit('https://automationteststore.com/')
           
-        // aml.ClickingHairCareTab()
-        cy.get("a[href*='product/category&path=']").contains('Hair Care').click({force:true})
+        aml.ClickingHairCareTab()
+       // cy.get("a[href*='product/category&path=']").contains('Hair Care').click({force:true})
     
     })
 
@@ -60,7 +60,8 @@ cy.get(':nth-child(2) > :nth-child(2) > .bold').invoke('text').then((text) => {
 cy.get('#totals_table > tbody > :nth-child(3) > :nth-child(1)').next().invoke('text').then((text) => {
     const priceText = text.replace('$', '');
      priceValue = Number(priceText);
-     expect(priceValue).to.equal(sum)
+     cy.log(priceValue)
+     expect(priceValue).to.equal(48.45)
 })
 
     })

@@ -1,43 +1,35 @@
 const { defineConfig } = require("cypress");
-const excelToJson = require('convert-excel-to-json');
-const fs = require('fs');
+const xlsx = require("node-xlsx").default;
+const fs = require("fs");
+const path = require("path");
 
-//module.exports = defineConfig({
-  
- 
- // e2e: {
-
-    module.exports = defineConfig({
-      // setupNodeEvents can be defined in either
-      // the e2e or component configuration
-      e2e: {
-    //     setupNodeEvents(on, config) {
-    //       on('task', {
-    //         readFileMaybe(filename) {
-    //           if (fs.existsSync(filename)) {
-    //             return fs.readFileSync(filename, 'utf8')
-    //           }
-    
-    //           return null
-    //         },
-    //       })
-    //     },
-    //   },
-    // })
-    setupNodeEvents(on, config) {
-      on('task', {
-        exceltojsonconverter: (filepath) => {
-          const result = excelToJson({
-            source: fs.readFileSync(filepath)
-          });
-          return result;
-        }
-      });
-      // implement node event listeners here
-    },
-   
-    
+module.exports = defineConfig({
+  chromeWebSecurity: false,
+  defaultCommandTimeout: 80000,
+  reporter: "mochawesome",
+  reporterOptions: {
+    reporter: 'cypress-mochawesome-reporter'
   },
-  
-  
+
+  e2e: {
+    setupNodeEvents(on, config) {
+      require('cypress-mochawesome-reporter/plugin')(on);
+     
+      on("task", { parseXlsx({ filepath }) {
+        return new Promise((resolve, reject) => {
+          try {
+            const jsondata = xlsx.parse(fs.readFileSync(filepath));
+            resolve(jsondata);
+          } catch (e) {
+            reject(e);
+          }
+        });
+      }
+    });
+    // implement other node event listeners here
+    config.screenshotOnRunFailure = true;
+    return config;
+  },
+},
 });
+

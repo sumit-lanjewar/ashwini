@@ -45,6 +45,10 @@ Cypress.Commands.add('addition', (sum1, sum2) => {
       
      })
     })
+    Cypress.Commands.add("parseXlsx",(inputfile)=>{
+        return cy.task("parseXlsx",{filepath:inputfile})
+        
+        });
    
  Cypress.Commands.add("addMProductToBasket", mulProductName => {
 

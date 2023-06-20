@@ -1,12 +1,15 @@
-//const cypress = require("cypress")
-//import 'cypress-xlsx';
+
+const excelToJson = require('convert-excel-to-json');
+const fs = require('fs');
+ 
+
 
 
 describe("adding item and asserting excel assertion",function(){
   let data
   before(function () {
     cy.fixture("example").then((reqData) => {
-      data = reqData;
+      data = reqData
     });
   });
   
@@ -59,30 +62,16 @@ describe("adding item and asserting excel assertion",function(){
 
        cy.get(".btn.btn-primary.mt-3.mb-3").last().click()
 
-//         const filepath=Cypress.config("/cypress/downloads/order-invoice_sumit.lanjewar123456.xlsx")
-//         //cy.task('exceltojsonconverter',filepath).then(function(result){
-//           // in test
-// cy.task('readFileMaybe',filepath ).then((result) => {  cy.log(result) })
-         
-//         })
-//     })
-// const filepath = '/cypress/downloads/order-invoice_sumit.lanjewar123456.xlsx';
-
-// cy.task('readFileMaybe', filepath).then((result) => {
-//   cy.log(result);
-// });
-// const filepath = '/cypress/downloads/order-invoice_sumit.lanjewar123456.xlsx';
-
-// cy.readFile(filepath, 'binary').then((fileContent) => {
-//   const parsedData = cy.parseXlsx(fileContent, { sheet: 'Sheet1' });
-//   cy.log(parsedData);
-// });
-const filepath = Cypress.config("fileServerFolder") + "cypress/downloads/order-invoice_sumit.lanjewar123456.xlsx";
-    const result =  exceltojsonconverter({
-      source: fs.readFileSync(filepath)
-    });
-
-    console.log(result);
+cy.parseXlsx("cypress/downloads/order-invoice_sumit.lanjewar123456.xlsx").then(jsonData=>{
+  const rowlength= Cypress.$(jsonData[0].data).length
+cy.log(rowlength)
+const information = Cypress.$(jsonData[0].data)
+cy.log(information)
+let value=jsonData[0].data[0]
+cy.log(value[0])
+cy.log(value[1])
 })
-})
-       
+     
+      })
+    })
+  

@@ -8,9 +8,12 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "cypress": "^12.13.0"
+    "cypress": "^12.13.0",
+    "cypress-mochawesome-reporter": "^3.5.0",
+    "node-xlsx": "^0.23.0"
   },
   "dependencies": {
-    "convert-excel-to-json": "^1.7.0"
+    "convert-excel-to-json": "^1.7.0",
+    "xlsx": "^0.18.5"
   }
 }
